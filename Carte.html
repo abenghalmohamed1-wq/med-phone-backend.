@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Med Phone - Your Cart</title>
+    <link rel="icon" type="image/png" href="med_phone_logo_1775612933332.png">
+    <link rel="apple-touch-icon" href="med_phone_logo_1775612933332.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        :root {
+            --blue: #1a6ef5;
+            --blue-dark: #0d4fc2;
+            --blue-light: #4d8ef7;
+            --blue-glow: rgba(26, 110, 245, 0.5);
+        }
+
+        body {
+            background: #0d1226;
+            color: #fff;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* BLURRED BACKGROUND */
+        .bg-layer {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            filter: blur(5px) brightness(0.35);
+            display: flex;
+            flex-direction: column;
+            padding: 24px 50px;
+            pointer-events: none;
+        }
+
+        .bg-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .bg-logo {
+            font-size: 22px;
+            color: var(--blue-light);
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bg-nav span {
+            margin: 0 14px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .bg-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .bg-card {
+            border: 1px solid rgba(26, 110, 245, 0.3);
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(26, 110, 245, 0.06);
+        }
+
+        .bg-img {
+            height: 100px;
+            background: rgba(26, 110, 245, 0.1);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+
+        .bg-line {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+
+        .bg-line.sm {
+            width: 60%;
+        }
+
+        .bg-line.xs {
+            width: 40%;
+            background: rgba(26, 110, 245, 0.25);
+        }
+
+        /* MODAL OVERLAY */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(2px);
+        }
+
+        .cart-modal {
+            width: 560px;
+            max-width: 95vw;
+            background: #070d1f;
+            border: 2px solid var(--blue);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 0 40px var(--blue-glow), inset 0 0 30px rgba(0, 0, 0, 0.7);
+            animation: fadeUp .35s cubic-bezier(.34, 1.2, .64, 1);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* MODAL HEADER */
+        .modal-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            color: var(--blue-light);
+            font-size: 19px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .modal-title span {
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 0;
+            top: -4px;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 20px;
+            transition: color .2s;
+        }
+
+        .close-btn:hover {
+            color: var(--blue-light);
+        }
+
+        /* CART ITEMS */
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-bottom: 26px;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .cart-items::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .cart-items::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .cart-items::-webkit-scrollbar-thumb {
+            background: var(--blue);
+            border-radius: 2px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 18px;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-index {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 13px;
+            width: 14px;
+            flex-shrink: 0;
+        }
+
+        .item-img-box {
+            width: 64px;
+            height: 64px;
+            background: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .item-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .item-name {
+            font-size: 14px;
+            color: #e8eaf6;
+            font-weight: 600;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .qty-control {
+            display: inline-flex;
+            align-items: center;
+            background: #111827;
+            border: 1px solid var(--blue);
+            border-radius: 20px;
+            padding: 3px 12px;
+            gap: 8px;
+        }
+
+        .qty-btn {
+            cursor: pointer;
+            font-weight: 800;
+            color: var(--blue-light);
+            font-size: 16px;
+            line-height: 1;
+            transition: color .2s;
+        }
+
+        .qty-btn:hover {
+            color: #fff;
+        }
+
+        .qty-val {
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        .item-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .item-price {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .remove-btn {
+            color: #ff4d6d;
+            font-size: 12px;
+            cursor: pointer;
+            transition: color .2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .remove-btn:hover {
+            color: #fff;
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .empty-state i {
+            font-size: 50px;
+            margin-bottom: 14px;
+            display: block;
+            color: rgba(26, 110, 245, 0.4);
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* SUMMARY */
+        .cart-summary {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+        }
+
+        .summary-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .summary-row span:last-child {
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .delivery-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #4ade80;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 18px;
+            margin-bottom: 22px;
+        }
+
+        .total-label {
+            color: var(--blue-light);
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .total-amount {
+            color: var(--blue-light);
+            font-size: 26px;
+            font-weight: 900;
+            text-shadow: 0 0 20px var(--blue-glow);
+        }
+
+        /* BUTTONS */
+        .modal-actions {
+            display: flex;
+            gap: 14px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: none;
+            transition: all .25s;
+            letter-spacing: .5px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn:hover {
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #1a2540;
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-secondary:hover {
+            background: #1e2d52;
+            color: #fff;
+        }
+
+        .btn-primary {
+            background: var(--blue);
+            color: #fff;
+            box-shadow: 0 6px 20px var(--blue-glow);
+        }
+
+        .btn-primary:hover {
+            background: var(--blue-dark);
+            box-shadow: 0 10px 30px var(--blue-glow);
+        }
+
+        /* CHAT */
+        .floating-chat {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 200;
+            background: var(--blue);
+            color: #fff;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 18px var(--blue-glow);
+            cursor: pointer;
+            transition: all .3s;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .floating-chat:hover {
+            transform: scale(1.1);
+            background: var(--blue-dark);
+        }
+
+        .chat-popup {
+            display: none;
+            position: fixed;
+            bottom: 92px;
+            right: 30px;
+            width: 320px;
+            height: 440px;
+            background: #070d1f;
+            border: 1px solid var(--blue);
+            z-index: 200;
+            flex-direction: column;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(26, 110, 245, 0.25);
+        }
+
+        .chat-head {
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0d1226;
+        }
+
+        .chat-head span {
+            color: var(--blue-light);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .chat-msgs {
+            flex: 1;
+            padding: 14px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-msg-init {
+            background: #1a2540;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .chat-foot {
+            padding: 10px 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            gap: 8px;
+            background: #0d1226;
+        }
+
+        .chat-inp {
+            flex: 1;
+            background: #111827;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 9px 14px;
+            border-radius: 20px;
+            outline: none;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .chat-inp:focus {
+            border-color: var(--blue);
+        }
+
+        .chat-send {
+            background: var(--blue);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BLURRED BACKGROUND (shows Med Phone products) -->
+    <div class="bg-layer">
+        <div class="bg-header">
+            <div class="bg-logo"><i class="fas fa-mobile-alt"></i> Med Phone</div>
+            <div class="bg-nav">
+                <span>Home</span><span>Shop</span><span>About</span><span>Contact</span>
+            </div>
+            <div style="width:120px;"></div>
+        </div>
+        <div class="bg-grid">
+            <div class="bg-card">
+                <div class="bg-img">📱</div>
+                <div class="bg-line"></div>
+                <div class="bg-line sm"></div>
+                <div class="bg-line xs"></div>
+            </div>
+            <div class="bg-card">
+                <div class="bg-img">🎧</div>
+                <div class="bg-line"></div>
+                <div class="bg-line sm"></div>
+                <div class="bg-line xs"></div>
+            </div>
+            <div class="bg-card">
+                <div class="bg-img">⌚</div>
+                <div class="bg-line"></div>
+                <div class="bg-line sm"></div>
+                <div class="bg-line xs"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CART MODAL -->
+    <div class="modal-overlay">
+        <div class="cart-modal">
+            <div class="modal-header">
+                <div class="modal-title">Your Cart <span id="cartCountLabel">(0 Items)</span></div>
+                <div class="close-btn" onclick="window.location.href='Home.html'"><i class="fas fa-xmark"></i></div>
+            </div>
+
+            <div class="cart-items" id="cartItems"></div>
+
+            <div class="cart-summary">
+                <div class="summary-title">Order Summary</div>
+                <div class="summary-row"><span>Subtotal</span><span id="subtotalVal">MAD 0.00</span></div>
+                <div class="delivery-row"><span><i class="fas fa-truck"
+                            style="margin-right:6px;"></i>Delivery</span><span>MAD 30.00</span></div>
+                <div class="total-row">
+                    <span class="total-label">Total</span>
+                    <span class="total-amount" id="totalVal">MAD 30.00</span>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" onclick="window.location.href='Home.html'"><i
+                            class="fas fa-arrow-left"></i> Continue</button>
+                    <button class="btn btn-primary" onclick="window.location.href='Payment.html'"><i
+                            class="fas fa-lock"></i> Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FLOATING CHAT -->
+    <div class="floating-chat" id="chatToggle"><i class="fas fa-comments"></i></div>
+    <div class="chat-popup" id="chatContainer">
+        <div class="chat-head"><span><i class="fas fa-mobile-alt"></i> Med Phone Assistant</span><span id="closeChat"
+                style="cursor:pointer;color:rgba(255,255,255,0.5);font-size:18px;">&times;</span></div>
+        <div class="chat-msgs" id="chatMessages">
+            <div class="chat-msg-init">👋 Hi! Need help with your cart or order?</div>
+        </div>
+        <div class="chat-foot">
+            <input type="text" class="chat-inp" id="chatInput" placeholder="Type a message...">
+            <button class="chat-send" id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script>
+        let cartData = JSON.parse(localStorage.getItem('mohaCart')) || [];
+
+        function fmt(n) { return n.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+
+        function renderCart() {
+            const container = document.getElementById('cartItems');
+            const count = cartData.reduce((a, i) => a + i.qty, 0);
+            document.getElementById('cartCountLabel').innerText = `(${count} ${count === 1 ? 'Item' : 'Items'})`;
+            if (!cartData.length) {
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-shopping-cart"></i><p>Your cart is empty.<br>Browse our products and add something!</p></div>';
+                document.getElementById('subtotalVal').innerText = 'MAD 0.00';
+                document.getElementById('totalVal').innerText = 'MAD 30.00';
+                return;
+            }
+            let subtotal = 0;
+            container.innerHTML = cartData.map((item, idx) => {
+                const total = item.price * item.qty;
+                subtotal += total;
+                const icon = item.icon || 'fa-mobile-alt';
+                return `<div class="cart-item">
+                <span class="item-index">${idx + 1}</span>
+                <div class="item-img-box"><i class="fas ${icon}" style="color:${item.color || '#1a6ef5'};font-size:28px;"></i></div>
+                <div class="item-details">
+                    <div class="item-name">${item.name}</div>
+                    <div class="qty-control">
+                        <span class="qty-btn" onclick="changeQty(${idx},-1)">−</span>
+                        <span class="qty-val">${item.qty}</span>
+                        <span class="qty-btn" onclick="changeQty(${idx},1)">+</span>
+                    </div>
+                </div>
+                <div class="item-right">
+                    <span class="item-price">MAD ${fmt(total)}</span>
+                    <span class="remove-btn" onclick="removeItem(${idx})"><i class="fas fa-trash"></i> Remove</span>
+                </div>
+            </div>`;
+            }).join('');
+            document.getElementById('subtotalVal').innerText = `MAD ${fmt(subtotal)}`;
+            document.getElementById('totalVal').innerText = `MAD ${fmt(subtotal + 30)}`;
+        }
+
+        function changeQty(idx, delta) {
+            if (cartData[idx].qty + delta > 0) { cartData[idx].qty += delta; }
+            else { cartData.splice(idx, 1); }
+            localStorage.setItem('mohaCart', JSON.stringify(cartData));
+            renderCart();
+        }
+        function removeItem(idx) {
+            cartData.splice(idx, 1);
+            localStorage.setItem('mohaCart', JSON.stringify(cartData));
+            renderCart();
+        }
+
+        renderCart();
+
+        // CHAT
+        const chatToggle = document.getElementById('chatToggle');
+        const chatContainer = document.getElementById('chatContainer');
+        const closeChat = document.getElementById('closeChat');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendMessage');
+        const chatMessages = document.getElementById('chatMessages');
+        chatToggle.addEventListener('click', () => chatContainer.style.display = 'flex');
+        closeChat.addEventListener('click', () => chatContainer.style.display = 'none');
+        function chatbotReply(text) {
+            const t = text.toLowerCase();
+            if (t.match(/delivery|shipping|livraison/)) return 'We deliver across Morocco in 2-4 business days for a flat fee of MAD 30.';
+            if (t.match(/return|refund|retour/)) return 'You can return any product within 30 days, hassle-free!';
+            if (t.match(/warranty|garantie/)) return 'All products come with a full 2-year manufacturer warranty.';
+            if (t.match(/payment|pay|payer|cash/)) return 'We accept Credit/Debit Cards and Cash on Delivery.';
+            if (t.match(/iphone|apple/)) return 'We carry the full Apple lineup - iPhone 15 Pro Max, AirPods Pro, Apple Watch and more!';
+            if (t.match(/samsung/)) return 'Samsung products in stock: Galaxy S24 Ultra, Galaxy Buds3 Pro, Galaxy Watch 6.';
+            if (t.match(/price|prix|cost|how much/)) return 'Check any product card for its price in MAD. We always offer the best rates!';
+            if (t.match(/contact|phone|call|email/)) return 'Reach us at support@medphone.ma or call +212 6XX XXX XXX (Mon-Sat 9am-8pm).';
+            if (t.match(/hello|hi|hey|bonjour|salut/)) return 'Hello! How can I help you today? Ask me about products, delivery, or returns.';
+            if (t.match(/track|order|commande/)) return 'To track your order, please contact us at support@medphone.ma with your order number.';
+            return "I'm here to help! You can ask me about products, delivery, returns, payment or contact info.";
+        } function handleChat() { const text = chatInput.value.trim(); if (!text) return; appendMsg(text, 'user'); chatInput.value = ''; setTimeout(() => appendMsg(chatbotReply(text), 'bot'), 400); }
+        function appendMsg(text, sender) {
+            const d = document.createElement('div');
+            d.style.cssText = `padding:10px 14px;border-radius:12px;margin-bottom:4px;max-width:85%;font-size:13px;line-height:1.5;`;
+            if (sender === 'user') { d.style.background = 'var(--blue)'; d.style.color = '#fff'; d.style.marginLeft = 'auto'; d.style.alignSelf = 'flex-end'; }
+            else { d.style.background = '#1a2540'; d.style.color = 'rgba(255,255,255,0.85)'; }
+            d.innerText = text;
+            chatMessages.appendChild(d);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        sendBtn.addEventListener('click', handleChat);
+        chatInput.addEventListener('keypress', e => { if (e.key === 'Enter') handleChat(); });
+    </script>
+</body>
+
+</html>
