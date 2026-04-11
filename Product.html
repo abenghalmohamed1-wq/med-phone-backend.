@@ -1280,23 +1280,50 @@
         function showToast(msg) { const t = document.getElementById('addToast'); t.innerText = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2200); }
         document.getElementById('cartIconBtn').addEventListener('click', () => window.location.href = 'Carte.html');
         updateCartCount(); loadAndInit();
+        // الرابط الكامل ديال الـ chatbot endpoint — Backend Web Service على Render
+        const CHAT_API = "https://med-phone-backend.onrender.com/api/chatbot/chat";
         const chatToggle = document.getElementById('chatToggle'), chatContainer = document.getElementById('chatContainer'), closeChat = document.getElementById('closeChat'), chatInput = document.getElementById('chatInput'), sendBtn = document.getElementById('sendMessage'), messagesArea = document.getElementById('chatMessages');
         chatToggle.addEventListener('click', () => chatContainer.style.display = 'flex');
         closeChat.addEventListener('click', () => chatContainer.style.display = 'none');
-        function chatbotReply(text) {
-            const t = text.toLowerCase();
-            if (t.match(/delivery|shipping|livraison/)) return 'We deliver across Morocco in 2-4 business days for a flat fee of MAD 30.';
-            if (t.match(/return|refund|retour/)) return 'You can return any product within 30 days, hassle-free!';
-            if (t.match(/warranty|garantie/)) return 'All products come with a full 2-year manufacturer warranty.';
-            if (t.match(/payment|pay|payer|cash/)) return 'We accept Credit/Debit Cards and Cash on Delivery.';
-            if (t.match(/iphone|apple/)) return 'We carry the full Apple lineup - iPhone 15 Pro Max, AirPods Pro, Apple Watch and more!';
-            if (t.match(/samsung/)) return 'Samsung products in stock: Galaxy S24 Ultra, Galaxy Buds3 Pro, Galaxy Watch 6.';
-            if (t.match(/price|prix|cost|how much/)) return 'Check any product card for its price in MAD. We always offer the best rates!';
-            if (t.match(/contact|phone|call|email/)) return 'Reach us at support@medphone.ma or call +212 6XX XXX XXX (Mon-Sat 9am-8pm).';
-            if (t.match(/hello|hi|hey|bonjour|salut/)) return 'Hello! How can I help you today? Ask me about products, delivery, or returns.';
-            if (t.match(/track|order|commande/)) return 'To track your order, please contact us at support@medphone.ma with your order number.';
-            return "I'm here to help! You can ask me about products, delivery, returns, payment or contact info.";
-        } function handleChat() { const text = chatInput.value.trim(); if (!text) return; addMsg(text, 'user-message'); chatInput.value = ''; setTimeout(() => addMsg(chatbotReply(text), 'bot-message'), 400); }
+
+        async function handleChat() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            addMsg(text, 'user-message');
+            chatInput.value = '';
+
+            // Add typing indicator
+            const typingId = 'typing-' + Date.now();
+            const typingDiv = document.createElement('div');
+            typingDiv.id = typingId;
+            typingDiv.className = 'message bot-message';
+            typingDiv.innerHTML = '<i class="fas fa-ellipsis-h fa-beat"></i> Thinking...';
+            messagesArea.appendChild(typingDiv);
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+
+            try {
+                const response = await fetch(CHAT_API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+
+                if (!response.ok) throw new Error('API Error');
+                const data = await response.json();
+                
+                const indicator = document.getElementById(typingId);
+                if (indicator) indicator.remove();
+                
+                addMsg(data.reply || "Sorry, I couldn't understand that.", 'bot-message');
+            } catch (error) {
+                console.error('Chat error:', error);
+                const indicator = document.getElementById(typingId);
+                if (indicator) indicator.remove();
+                addMsg("سمح ليا أخويا، كاين شي مشكل تقني حالياً. حاول مرة أخرى من بعد! 🙏", 'bot-message');
+            }
+        }
+
         function addMsg(text, cls) { const d = document.createElement('div'); d.className = `message ${cls}`; d.innerText = text; messagesArea.appendChild(d); messagesArea.scrollTop = messagesArea.scrollHeight; }
         sendBtn.addEventListener('click', handleChat);
         chatInput.addEventListener('keypress', e => { if (e.key === 'Enter') handleChat(); });

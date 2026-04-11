@@ -25,6 +25,9 @@ class Settings(BaseSettings):
     app_title: str = "Med Phone API"
     app_version: str = "1.0.0"
 
+    # Gemini
+    gemini_api_key: str = ""
+
     model_config = {
         "env_file": "backend/.env",
         "env_file_encoding": "utf-8",
