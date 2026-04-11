@@ -19,7 +19,12 @@ def get_firebase_app() -> firebase_admin.App:
     if _app is not None:
         return _app
 
-    cred_path = settings.firebase_credentials_path
+   import os
+
+    if os.path.exists("/etc/secrets/firebase_credentials.json"):
+        cred_path = "/etc/secrets/firebase_credentials.json"
+    else:
+        cred_path = settings.firebase_credentials_path
     if not os.path.exists(cred_path):
         raise FileNotFoundError(
             f"Firebase credentials not found at '{cred_path}'.\n"
