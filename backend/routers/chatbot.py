@@ -10,24 +10,32 @@ class ChatRequest(BaseModel):
     message: str
 
 @router.post("")
+async def chat_root(req: ChatRequest, settings=Depends(get_settings)):
+    return await chat_with_bot(req, settings)
+
 @router.post("/chat")
 async def chat_with_bot(req: ChatRequest, settings=Depends(get_settings)):
     api_key = settings.gemini_api_key
     
-    # Check if API key is set
+    # تأكد من أن الساروت كاين
     if not api_key or api_key == "your_gemini_api_key_here":
-        return {"reply": "API key is not configured. Please add GEMINI_API_KEY to your .env file."}
+        error_msg = "API key is not configured. Please add GEMINI_API_KEY to your .env file."
+        return {"reply": error_msg, "response": error_msg, "message": error_msg}
 
-    # Configure Gemini
+    # إعداد Gemini بموديل مضمون
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-2.0-flash')
+    model = genai.GenerativeModel('gemini-1.5-flash')
 
-    # Fetch products from Firebase for context
-    db = get_db()
-    products_data = db.child("products").get()
-    
+    # جلب معلومات السلعة من Firebase
+    try:
+        root_ref = get_db()
+        products_data = root_ref.child("products").get()
+    except Exception as fb_err:
+        print("Firebase Error:", fb_err)
+        products_data = None
+
     product_context = ""
-    if products_data:
+    if products_data and isinstance(products_data, dict):
         items = []
         for pid, data in products_data.items():
             if isinstance(data, dict):
@@ -35,13 +43,13 @@ async def chat_with_bot(req: ChatRequest, settings=Depends(get_settings)):
                 price = data.get("price", "N/A")
                 stock = data.get("stock", 0)
                 items.append(f"- {name}: {price} Dh (Stock: {stock})")
-        product_context = "\n".join(items)
+        product_context = "\n".join(items) if items else "حاليا ماكاين حتى منتوج فـ الستوك."
     else:
-        product_context = "No products currently in stock."
+        product_context = "حاليا ماكاين حتى منتوج فـ الستوك."
 
     user_message = req.message
     
-    # Prompt construction
+    # بناء التعليمات ديال البوت
     prompt = f"""
 أنت مساعد ذكي سميتك 'Med Phone Bot' خدام فمتجر إلكتروني ديال التليفونات فالمغرب. كتهضر بالدارجة المغربية.
 
@@ -59,8 +67,16 @@ async def chat_with_bot(req: ChatRequest, settings=Depends(get_settings)):
 """
 
     try:
-        response = model.generate_content(prompt)
-        return {"reply": response.text}
+        # استدعاء Gemini بطريقة Async باش ما يتبلوكاش السيرفر
+        response = await model.generate_content_async(prompt)
+        
+        # غانصيفطو الجواب بـ 3 ديال السميات باش السيت يلقاه كيفما كان مبرمج!
+        return {
+            "reply": response.text,
+            "response": response.text,
+            "message": response.text
+        }
     except Exception as e:
         print("Gemini Error:", e)
-        return {"reply": "سمح ليا أخويا، كاين شي مشكل تقني فهاد اللحظة، عاود سولني من بعد شوية! 🙏"}
+        err_msg = "سمح ليا أخويا، كاين شي مشكل تقني فهاد اللحظة، عاود سولني من بعد شوية! 🙏"
+        return {"reply": err_msg, "response": err_msg, "message": err_msg}
