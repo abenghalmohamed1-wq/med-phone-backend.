@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Med Phone - About Us</title>
+    <link rel="icon" type="image/png" href="med_phone_logo_1775612933332.png">
+    <link rel="apple-touch-icon" href="med_phone_logo_1775612933332.png">
+    <meta name="description"
+        content="Learn about Med Phone — Morocco's trusted electronics store for smartphones, AirPods, and smartwatches.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blue: #1a6ef5;
+            --blue-dark: #0d4fc2;
+            --blue-light: #4d8ef7;
+            --blue-glow: rgba(26, 110, 245, 0.35);
+            --bg: #f5f8ff;
+            --off-white: #f0f4ff;
+            --text-dark: #0f1535;
+            --text-mid: #3a4a7a;
+            --border: #d0daf5;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0a1a5c, #1a3fa8);
+            padding: 18px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(10, 26, 92, 0.5);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 20px;
+            color: #fff;
+            background: var(--blue);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--blue-light);
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all .3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #fff;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--blue-light);
+            transition: width .3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .cart-icon {
+            background: var(--blue);
+            color: #fff;
+            padding: 11px 22px;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .3s;
+            font-size: 14px;
+            box-shadow: 0 4px 15px var(--blue-glow);
+        }
+
+        .cart-icon:hover {
+            background: var(--blue-dark);
+            transform: scale(1.05);
+        }
+
+        /* HERO */
+        .about-hero {
+            background: linear-gradient(135deg, #0a1a5c 0%, #1a6ef5 100%);
+            padding: 90px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            left: -80px;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .about-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            right: -60px;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .hero-label {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 7px 18px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-size: 54px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 18px;
+            line-height: 1.1;
+        }
+
+        .hero-title span {
+            color: var(--blue-light);
+        }
+
+        .hero-sub {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.75);
+            max-width: 540px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* STATS */
+        .stats-strip {
+            background: #fff;
+            padding: 50px 60px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 20px;
+        }
+
+        .stat-num {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--blue);
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #8a9ac0;
+            font-weight: 600;
+        }
+
+        /* MISSION */
+        .mission-section {
+            padding: 80px 60px;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: center;
+        }
+
+        .mission-visual {
+            background: linear-gradient(135deg, #0a1a5c, #1a6ef5);
+            border-radius: 28px;
+            padding: 70px 40px;
+            text-align: center;
+            font-size: 120px;
+            box-shadow: 0 20px 60px rgba(26, 110, 245, 0.25);
+        }
+
+        .section-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 38px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            line-height: 1.15;
+        }
+
+        .section-text {
+            font-size: 15px;
+            color: var(--text-mid);
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        .mission-points {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 24px;
+        }
+
+        .point {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .point-dot {
+            width: 36px;
+            height: 36px;
+            background: var(--off-white);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--blue);
+            flex-shrink: 0;
+        }
+
+        .point-text {
+            font-size: 14px;
+            color: var(--text-mid);
+            line-height: 1.6;
+            padding-top: 6px;
+        }
+
+        .point-text strong {
+            color: var(--text-dark);
+        }
+
+        /* VALUES */
+        .values-section {
+            background: #fff;
+            padding: 80px 60px;
+            border-top: 1px solid var(--border);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-top: 50px;
+        }
+
+        .value-card {
+            background: var(--off-white);
+            border: 2px solid var(--border);
+            border-radius: 22px;
+            padding: 34px 28px;
+            transition: all .3s;
+        }
+
+        .value-card:hover {
+            border-color: var(--blue);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(26, 110, 245, 0.12);
+        }
+
+        .value-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 18px;
+            box-shadow: 0 6px 20px var(--blue-glow);
+        }
+
+        .value-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .value-text {
+            font-size: 14px;
+            color: #8a9ac0;
+            line-height: 1.7;
+        }
+
+        /* TEAM */
+        .team-section {
+            padding: 80px 60px;
+            text-align: center;
+        }
+
+        .team-card {
+            background: #fff;
+            border-radius: 22px;
+            padding: 40px 30px;
+            border: 2px solid var(--border);
+            box-shadow: 0 4px 20px rgba(26, 110, 245, 0.06);
+            max-width: 320px;
+            margin: 50px auto 0;
+            transition: all .3s;
+        }
+
+        .team-card:hover {
+            border-color: var(--blue);
+            transform: translateY(-6px);
+        }
+
+        .team-avatar {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #fff;
+            margin: 0 auto 16px;
+            box-shadow: 0 8px 25px var(--blue-glow);
+        }
+
+        .team-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .team-role {
+            font-size: 13px;
+            color: var(--blue);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+
+        .team-bio {
+            font-size: 13px;
+            color: #8a9ac0;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .team-socials {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .team-socials a {
+            width: 36px;
+            height: 36px;
+            background: var(--off-white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-mid);
+            font-size: 15px;
+            text-decoration: none;
+            transition: all .3s;
+        }
+
+        .team-socials a:hover {
+            background: var(--blue);
+            color: #fff;
+            border-color: var(--blue);
+        }
+
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, #0a1a5c, #1a6ef5);
+            padding: 80px 60px;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 40px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 36px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-cta {
+            background: #fff;
+            color: var(--blue);
+            padding: 16px 40px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transition: all .3s;
+            margin: 0 8px;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-cta-outline {
+            background: transparent;
+            color: #fff;
+            padding: 16px 40px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            font-family: 'Inter', sans-serif;
+            transition: all .3s;
+            margin: 0 8px;
+        }
+
+        .btn-cta-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* FOOTER */
+        footer {
+            background: #080f30;
+            padding: 50px 60px 25px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand .logo {
+            font-size: 20px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .footer-brand p {
+            font-size: 13px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 16px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-links a {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 17px;
+            transition: all .3s;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .social-links a:hover {
+            color: #fff;
+            background: var(--blue);
+            transform: translateY(-3px);
+        }
+
+        .footer-col h4 {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .footer-col a {
+            display: block;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 9px;
+            transition: color .3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--blue-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 22px;
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        @media(max-width:900px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 18px 20px;
+            }
+
+            .about-hero {
+                padding: 60px 20px;
+            }
+
+            .hero-title {
+                font-size: 34px;
+            }
+
+            .stats-strip {
+                padding: 40px 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .mission-section {
+                grid-template-columns: 1fr;
+                padding: 50px 20px;
+                gap: 30px;
+            }
+
+            .mission-visual {
+                display: none;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+                padding: 0;
+            }
+
+            .values-section {
+                padding: 50px 20px;
+            }
+
+            .team-section {
+                padding: 50px 20px;
+            }
+
+            .cta-section {
+                padding: 60px 20px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            footer {
+                padding: 40px 20px 20px;
+            }
+        }
+
+        /* CHATBOT */
+        .chat-toggle-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px var(--blue-glow);
+            z-index: 9999;
+            transition: all .3s;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .chat-toggle-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .chat-container {
+            position: fixed;
+            bottom: 96px;
+            right: 30px;
+            width: 340px;
+            height: 480px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(26, 110, 245, 0.2);
+            z-index: 9999;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #0a1a5c, #1a6ef5);
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            color: #fff;
+            font-size: 15px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-chat {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .close-chat:hover {
+            color: #fff;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            background: var(--off-white);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .bot-message {
+            background: #fff;
+            color: var(--text-dark);
+            align-self: flex-start;
+            border: 1px solid var(--border);
+        }
+
+        .user-message {
+            background: var(--blue);
+            color: #fff;
+            align-self: flex-end;
+        }
+
+        .chat-input-area {
+            padding: 12px;
+            background: #fff;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: var(--off-white);
+            border: 1px solid var(--border);
+            padding: 9px 14px;
+            border-radius: 20px;
+            color: var(--text-dark);
+            outline: none;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .chat-input:focus {
+            border-color: var(--blue);
+        }
+
+        .send-btn {
+            background: var(--blue);
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .3s;
+        }
+
+        .send-btn:hover {
+            background: var(--blue-dark);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="Home.html" class="logo-section">
+            <div class="logo-icon"><i class="fas fa-mobile-alt"></i></div>
+            <div class="logo">Med <span>Phone</span></div>
+        </a>
+        <nav>
+            <a href="Home.html">Home</a>
+            <a href="Home.html#products">Shop</a>
+            <a href="About.html" style="color:#fff;">About</a>
+            <a href="Contact.html">Contact</a>
+        </nav>
+        <div class="header-actions">
+            <div class="cart-icon" id="cartIconBtn"><i class="fas fa-shopping-cart"></i> Cart (0)</div>
+        </div>
+    </header>
+
+    <div class="about-hero">
+        <div class="hero-label">🏆 Our Story</div>
+        <h1 class="hero-title">Premium Tech,<br><span>Trusted Service</span></h1>
+        <p class="hero-sub">Med Phone is Morocco's go-to destination for authentic smartphones, AirPods, and
+            smartwatches — at fair prices with fast delivery.</p>
+    </div>
+
+    <div class="stats-strip">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-num">10K+</div>
+                <div class="stat-label">Happy Customers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">500+</div>
+                <div class="stat-label">Products</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">4.9★</div>
+                <div class="stat-label">Customer Rating</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">3+</div>
+                <div class="stat-label">Years of Service</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="max-width:1100px;margin:0 auto;">
+        <div class="mission-section">
+            <div class="mission-visual">📱</div>
+            <div>
+                <div class="section-label">Our Mission</div>
+                <h2 class="section-title">Making Premium Tech Accessible</h2>
+                <p class="section-text">We believe everyone deserves access to premium technology. Med Phone was founded
+                    with a simple mission: bring authentic, top-quality electronics to Moroccan customers with honest
+                    pricing and exceptional service.</p>
+                <div class="mission-points">
+                    <div class="point">
+                        <div class="point-dot"><i class="fas fa-check"></i></div>
+                        <div class="point-text"><strong>100% Authentic Products</strong> — Every product is verified and
+                            sourced from authorized distributors.</div>
+                    </div>
+                    <div class="point">
+                        <div class="point-dot"><i class="fas fa-truck"></i></div>
+                        <div class="point-text"><strong>Fast Delivery — 30 MAD</strong> — Nationwide delivery in 2-4
+                            business days.</div>
+                    </div>
+                    <div class="point">
+                        <div class="point-dot"><i class="fas fa-shield-alt"></i></div>
+                        <div class="point-text"><strong>2-Year Warranty</strong> — Full manufacturer warranty on all
+                            products.</div>
+                    </div>
+                    <div class="point">
+                        <div class="point-dot"><i class="fas fa-undo"></i></div>
+                        <div class="point-text"><strong>30-Day Returns</strong> — Hassle-free returns if you're not
+                            satisfied.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="values-section">
+        <div style="text-align:center;">
+            <div class="section-label">What We Stand For</div>
+            <h2 class="section-title">Our Core Values</h2>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-gem"></i></div>
+                <div class="value-title">Quality First</div>
+                <div class="value-text">We only sell authentic products from top brands. No counterfeits, no compromises
+                    — ever.</div>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-heart"></i></div>
+                <div class="value-title">Customer Focus</div>
+                <div class="value-text">Your satisfaction is our top priority. We go above and beyond to make every
+                    purchase seamless.</div>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-handshake"></i></div>
+                <div class="value-title">Transparency</div>
+                <div class="value-text">Clear pricing, honest descriptions, and no hidden fees. What you see is exactly
+                    what you get.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="team-section">
+        <div class="section-label">The Team</div>
+        <h2 class="section-title">Meet the Founder</h2>
+        <div class="team-card">
+            <div class="team-avatar"><i class="fas fa-user"></i></div>
+            <div class="team-name">Mohamed Abenghal</div>
+            <div class="team-role">Founder & CEO</div>
+            <div class="team-bio">Passionate about technology and customer service, Mohamed built Med Phone to make
+                premium electronics accessible to everyone in Morocco.</div>
+            <div class="team-socials">
+                <a href="https://www.instagram.com/abenghal__prv" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/mohamed-abenghal-9a0b8430b" target="_blank"><i
+                        class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta-section">
+        <h2>Ready to Shop?</h2>
+        <p>Browse our full collection of premium smartphones, AirPods, and smartwatches.</p>
+        <button class="btn-cta" onclick="window.location.href='Home.html#products'"><i class="fas fa-shopping-bag"></i>
+            Shop Now</button>
+        <button class="btn-cta-outline" onclick="window.location.href='Contact.html'"><i class="fas fa-envelope"></i>
+            Contact Us</button>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <span class="logo">Med <span>Phone</span></span>
+                <p>Your trusted destination for premium electronics — smartphones, AirPods, and smartwatches.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/abenghal__prv" target="_blank"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.linkedin.com/in/mohamed-abenghal-9a0b8430b" target="_blank"><i
+                            class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="Home.html">Home</a><a href="Home.html#products">Shop</a><a href="About.html">About Us</a><a
+                    href="Contact.html">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h4>Categories</h4>
+                <a href="Home.html#products">Smartphones</a><a href="Home.html#products">AirPods</a><a
+                    href="Home.html#products">Smartwatches</a>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2025 Med Phone — All Rights Reserved</div>
+    </footer>
+
+    <div class="chat-toggle-btn" id="chatToggle"><i class="fas fa-comments"></i></div>
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <h3><i class="fas fa-mobile-alt"></i> Med Phone Assistant</h3><button class="close-chat" id="closeChat"><i
+                    class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">Hi! 👋 How can I help you today?</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Ask about products, delivery...">
+            <button class="send-btn" id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script>
+        function updateCartCount() { const cart = JSON.parse(localStorage.getItem('mohaCart')) || []; const count = cart.reduce((a, i) => a + i.qty, 0); document.getElementById('cartIconBtn').innerHTML = `<i class="fas fa-shopping-cart"></i> Cart (${count})`; }
+        document.getElementById('cartIconBtn').addEventListener('click', () => window.location.href = 'Carte.html');
+        updateCartCount();
+
+        const chatToggle = document.getElementById('chatToggle'), chatContainer = document.getElementById('chatContainer'), closeChat = document.getElementById('closeChat'), chatInput = document.getElementById('chatInput'), sendBtn = document.getElementById('sendMessage'), messagesArea = document.getElementById('chatMessages');
+        chatToggle.addEventListener('click', () => chatContainer.style.display = 'flex');
+        closeChat.addEventListener('click', () => chatContainer.style.display = 'none');
+        function chatbotReply(text) {
+            const t = text.toLowerCase();
+            if (t.match(/delivery|shipping|livraison/)) return 'We deliver across Morocco in 2-4 business days for a flat fee of MAD 30.';
+            if (t.match(/return|refund|retour/)) return 'You can return any product within 30 days, hassle-free!';
+            if (t.match(/warranty|garantie/)) return 'All products come with a full 2-year manufacturer warranty.';
+            if (t.match(/payment|pay|payer|cash/)) return 'We accept Credit/Debit Cards and Cash on Delivery.';
+            if (t.match(/iphone|apple/)) return 'We carry the full Apple lineup - iPhone 15 Pro Max, AirPods Pro, Apple Watch and more!';
+            if (t.match(/samsung/)) return 'Samsung products in stock: Galaxy S24 Ultra, Galaxy Buds3 Pro, Galaxy Watch 6.';
+            if (t.match(/price|prix|cost|how much/)) return 'Check any product card for its price in MAD. We always offer the best rates!';
+            if (t.match(/contact|phone|call|email/)) return 'Reach us at support@medphone.ma or call +212 6XX XXX XXX (Mon-Sat 9am-8pm).';
+            if (t.match(/hello|hi|hey|bonjour|salut/)) return 'Hello! How can I help you today? Ask me about products, delivery, or returns.';
+            if (t.match(/track|order|commande/)) return 'To track your order, please contact us at support@medphone.ma with your order number.';
+            return "I'm here to help! You can ask me about products, delivery, returns, payment or contact info.";
+        } function handleChat() { const text = chatInput.value.trim(); if (!text) return; addMsg(text, 'user-message'); chatInput.value = ''; setTimeout(() => addMsg(chatbotReply(text), 'bot-message'), 400); }
+        function addMsg(text, cls) { const d = document.createElement('div'); d.className = `message ${cls}`; d.innerText = text; messagesArea.appendChild(d); messagesArea.scrollTop = messagesArea.scrollHeight; }
+        sendBtn.addEventListener('click', handleChat);
+        chatInput.addEventListener('keypress', e => { if (e.key === 'Enter') handleChat(); });
+    </script>
+</body>
+
+</html>

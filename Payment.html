@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Med Phone - Secure Payment</title>
+    <link rel="icon" type="image/png" href="med_phone_logo_1775612933332.png">
+    <link rel="apple-touch-icon" href="med_phone_logo_1775612933332.png">
+    <meta name="description" content="Secure checkout for Med Phone — premium electronics.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blue: #1a6ef5;
+            --blue-dark: #0d4fc2;
+            --blue-light: #4d8ef7;
+            --blue-glow: rgba(26, 110, 245, 0.35);
+            --bg: #f5f8ff;
+            --off-white: #f0f4ff;
+            --text-dark: #0f1535;
+            --text-mid: #3a4a7a;
+            --border: #d0daf5;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text-dark);
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0a1a5c, #1a3fa8);
+            padding: 18px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 30px rgba(10, 26, 92, 0.5);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 20px;
+            color: #fff;
+            background: var(--blue);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--blue-light);
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color .3s;
+        }
+
+        nav a:hover {
+            color: #fff;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .cart-btn {
+            background: var(--blue);
+            color: #fff;
+            padding: 11px 22px;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 4px 15px var(--blue-glow);
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .cart-btn:hover {
+            background: var(--blue-dark);
+        }
+
+        /* PROGRESS */
+        .progress-bar {
+            max-width: 600px;
+            margin: 40px auto 0;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 15px;
+            border: 3px solid var(--border);
+            background: #fff;
+            color: #8a9ac0;
+            transition: all .3s;
+        }
+
+        .step-circle.active {
+            background: var(--blue);
+            border-color: var(--blue);
+            color: #fff;
+            box-shadow: 0 4px 15px var(--blue-glow);
+        }
+
+        .step-circle.done {
+            background: #22c55e;
+            border-color: #22c55e;
+            color: #fff;
+        }
+
+        .step-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #8a9ac0;
+        }
+
+        .step-label.active {
+            color: var(--blue);
+        }
+
+        .step-line {
+            flex: 1;
+            height: 3px;
+            background: var(--border);
+            margin: -18px 0 0;
+            border-radius: 2px;
+        }
+
+        .step-line.done {
+            background: var(--blue);
+        }
+
+        /* LAYOUT */
+        main {
+            max-width: 1100px;
+            margin: 30px auto 60px;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 40px;
+            align-items: start;
+        }
+
+        /* FORM CARD */
+        .form-card {
+            background: #fff;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            padding: 36px;
+            box-shadow: 0 4px 20px rgba(26, 110, 245, 0.06);
+        }
+
+        .form-card h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-card h2 i {
+            color: var(--blue);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-mid);
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 13px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background: var(--off-white);
+            outline: none;
+            transition: border .2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--blue);
+            background: #fff;
+        }
+
+        .divider {
+            border: none;
+            border-top: 2px solid var(--off-white);
+            margin: 24px 0;
+        }
+
+        /* ORDER SUMMARY */
+        .summary-card {
+            background: #fff;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(26, 110, 245, 0.06);
+            position: sticky;
+            top: 30px;
+        }
+
+        .summary-card h2 {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .order-items {
+            max-height: 220px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--off-white);
+            font-size: 14px;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            flex: 1;
+            font-weight: 600;
+            color: var(--text-dark);
+            padding-right: 10px;
+        }
+
+        .item-qty {
+            color: #8a9ac0;
+            font-size: 12px;
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .summary-rows {
+            margin-bottom: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        .summary-row span:last-child {
+            font-weight: 700;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-top: 2px solid var(--blue);
+            margin-top: 4px;
+        }
+
+        .summary-total .label {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .summary-total .amount {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--blue);
+        }
+
+        .secure-badges {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            background: var(--off-white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-mid);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .badge i {
+            color: var(--blue);
+        }
+
+        .btn-pay {
+            width: 100%;
+            background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+            color: #fff;
+            border: none;
+            padding: 18px;
+            border-radius: 30px;
+            font-size: 17px;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 8px 25px var(--blue-glow);
+            transition: all .3s;
+            letter-spacing: .5px;
+        }
+
+        .btn-pay:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 35px var(--blue-glow);
+        }
+
+        /* SUCCESS MODAL */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 26, 92, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: #fff;
+            border-radius: 28px;
+            padding: 50px 40px;
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 30px 80px rgba(26, 110, 245, 0.25);
+            animation: popIn .4s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #fff;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+        }
+
+        .modal h2 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .modal p {
+            color: #8a9ac0;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .btn-home {
+            background: var(--blue);
+            color: #fff;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 6px 20px var(--blue-glow);
+            transition: all .3s;
+        }
+
+        .btn-home:hover {
+            background: var(--blue-dark);
+            transform: translateY(-2px);
+        }
+
+        @media(max-width:900px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 18px 20px;
+            }
+
+            main {
+                grid-template-columns: 1fr;
+                padding: 0 20px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="Home.html" class="logo-section">
+            <div class="logo-icon"><i class="fas fa-mobile-alt"></i></div>
+            <div class="logo">Med <span>Phone</span></div>
+        </a>
+        <nav>
+            <a href="Home.html">Home</a>
+            <a href="Home.html#products">Shop</a>
+            <a href="About.html">About</a>
+            <a href="Contact.html">Contact</a>
+        </nav>
+        <div class="header-actions">
+            <button class="cart-btn" onclick="window.location.href='Carte.html'"><i class="fas fa-shopping-cart"></i>
+                Cart</button>
+        </div>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+        <div class="step">
+            <div class="step-circle done"><i class="fas fa-check"></i></div>
+            <div class="step-label">Cart</div>
+        </div>
+        <div class="step-line done"></div>
+        <div class="step">
+            <div class="step-circle active">2</div>
+            <div class="step-label active">Payment</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+            <div class="step-circle">3</div>
+            <div class="step-label">Confirm</div>
+        </div>
+    </div>
+
+    <main>
+        <!-- LEFT: FORM -->
+        <div>
+            <!-- Shipping Info -->
+            <div class="form-card" style="margin-bottom:24px;">
+                <h2><i class="fas fa-map-marker-alt"></i> Shipping Information</h2>
+                <div class="form-row">
+                    <div class="form-group"><label>First Name</label><input id="firstName" type="text"
+                            placeholder=""></div>
+                    <div class="form-group"><label>Last Name</label><input id="lastName" type="text"
+                            placeholder=""></div>
+                </div>
+                <div class="form-group"><label>Email Address</label><input id="email" type="email"
+                        placeholder=""></div>
+                <div class="form-group"><label>Phone Number</label><input id="phone" type="tel"
+                        placeholder=""></div>
+                <div class="form-group"><label>Delivery Address</label><input id="address" type="text"
+                        placeholder=""></div>
+                <div class="form-row">
+                    <div class="form-group"><label>City</label><input id="city" type="text" placeholder="">
+                    </div>
+                    <div class="form-group"><label>Postal Code</label><input id="postal" type="text"
+                            placeholder=""></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT: ORDER SUMMARY -->
+        <div class="summary-card">
+            <h2>Order Summary</h2>
+            <div class="order-items" id="orderItems"></div>
+            <div class="summary-rows">
+                <div class="summary-row"><span>Subtotal</span><span id="summarySubtotal">MAD 0.00</span></div>
+                <div class="summary-row"><span><i class="fas fa-truck"
+                            style="color:var(--blue);margin-right:6px;"></i>Delivery</span><span
+                        style="color:#22c55e;">MAD 30.00</span></div>
+            </div>
+            <div class="summary-total">
+                <span class="label">Total</span>
+                <span class="amount" id="summaryTotal">MAD 0.00</span>
+            </div>
+            <div class="secure-badges">
+                <div class="badge"><i class="fas fa-lock"></i> Secure</div>
+                <div class="badge"><i class="fas fa-shield-alt"></i> Protected</div>
+                <div class="badge"><i class="fas fa-undo"></i> 30-Day Return</div>
+            </div>
+            <button class="btn-pay" onclick="placeOrder()"><i class="fas fa-lock"></i> &nbsp;Place Order</button>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal">
+            <div class="success-icon"><i class="fas fa-check"></i></div>
+            <h2>Order Confirmed! 🎉</h2>
+            <p>Thank you for your purchase!<br>Your order will be delivered within <strong>2-4 business
+                    days</strong>.<br>Delivery fee: <strong>MAD 30.00</strong></p>
+            <button class="btn-home" onclick="window.location.href='Home.html'"><i class="fas fa-home"></i> Back to
+                Home</button>
+        </div>
+    </div>
+
+    <script>
+        // Firebase RTDB REST API URL
+        const DB_URL = "https://med-phone-e4814-default-rtdb.europe-west1.firebasedatabase.app";
+
+        // ── Render order summary from localStorage ───────────────────────
+        function renderSummary() {
+            const cart = JSON.parse(localStorage.getItem('mohaCart')) || [];
+            const itemsEl = document.getElementById('orderItems');
+            if (!cart.length) { itemsEl.innerHTML = '<p style="color:#8a9ac0;text-align:center;padding:20px 0;">Your cart is empty.</p>'; return; }
+            let sub = 0;
+            itemsEl.innerHTML = cart.map(i => { sub += i.price * i.qty; return `<div class="order-item"><span class="item-name">${i.name}</span><span class="item-qty">×${i.qty}</span><span class="item-price">MAD ${(i.price * i.qty).toLocaleString()}</span></div>`; }).join('');
+            document.getElementById('summarySubtotal').innerText = `MAD ${sub.toLocaleString('en', { minimumFractionDigits: 2 })}`;
+            document.getElementById('summaryTotal').innerText = `MAD ${(sub + 30).toLocaleString('en', { minimumFractionDigits: 2 })}`;
+        }
+
+        // ── Place order → POST to Firebase RTDB REST API /commandes ──────
+        async function placeOrder() {
+            const fields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city'];
+            for (const f of fields) {
+                if (!document.getElementById(f)?.value.trim()) {
+                    alert('Please fill in all shipping fields.');
+                    return;
+                }
+            }
+
+            const cart = JSON.parse(localStorage.getItem('mohaCart')) || [];
+            if (!cart.length) { alert('Your cart is empty.'); return; }
+
+            const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+            const commande = {
+                smiya_kliyane: document.getElementById('firstName').value.trim() + ' ' + document.getElementById('lastName').value.trim(),
+                telephone: document.getElementById('phone').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                adresse: document.getElementById('address').value.trim(),
+                ville: document.getElementById('city').value.trim(),
+                code_postal: document.getElementById('postal').value.trim(),
+                items: cart.map(i => ({ name: i.name, price: i.price, qty: i.qty })),
+                subtotal: subtotal,
+                delivery: 30,
+                total: subtotal + 30,
+                status: "en_attente",
+                date: new Date().toISOString()
+            };
+
+            // Disable button while saving
+            const btn = document.querySelector('.btn-pay');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> &nbsp;Processing...';
+
+            try {
+                const res = await fetch(DB_URL + '/commandes.json', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(commande)
+                });
+
+                if (!res.ok) {
+                    const errData = await res.json().catch(() => ({}));
+                    throw new Error(errData.error || res.statusText);
+                }
+
+                localStorage.removeItem('mohaCart');
+                document.getElementById('successModal').classList.add('show');
+            } catch (err) {
+                console.error('Order failed:', err);
+                alert('Something went wrong: ' + err.message);
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-lock"></i> &nbsp;Place Order';
+            }
+        }
+
+        renderSummary();
+    </script>
+</body>
+
+</html>
