@@ -685,20 +685,43 @@
         const chatMessages = document.getElementById('chatMessages');
         chatToggle.addEventListener('click', () => chatContainer.style.display = 'flex');
         closeChat.addEventListener('click', () => chatContainer.style.display = 'none');
-        function chatbotReply(text) {
-            const t = text.toLowerCase();
-            if (t.match(/delivery|shipping|livraison/)) return 'We deliver across Morocco in 2-4 business days for a flat fee of MAD 30.';
-            if (t.match(/return|refund|retour/)) return 'You can return any product within 30 days, hassle-free!';
-            if (t.match(/warranty|garantie/)) return 'All products come with a full 2-year manufacturer warranty.';
-            if (t.match(/payment|pay|payer|cash/)) return 'We accept Credit/Debit Cards and Cash on Delivery.';
-            if (t.match(/iphone|apple/)) return 'We carry the full Apple lineup - iPhone 15 Pro Max, AirPods Pro, Apple Watch and more!';
-            if (t.match(/samsung/)) return 'Samsung products in stock: Galaxy S24 Ultra, Galaxy Buds3 Pro, Galaxy Watch 6.';
-            if (t.match(/price|prix|cost|how much/)) return 'Check any product card for its price in MAD. We always offer the best rates!';
-            if (t.match(/contact|phone|call|email/)) return 'Reach us at support@medphone.ma or call +212 6XX XXX XXX (Mon-Sat 9am-8pm).';
-            if (t.match(/hello|hi|hey|bonjour|salut/)) return 'Hello! How can I help you today? Ask me about products, delivery, or returns.';
-            if (t.match(/track|order|commande/)) return 'To track your order, please contact us at support@medphone.ma with your order number.';
-            return "I'm here to help! You can ask me about products, delivery, returns, payment or contact info.";
-        } function handleChat() { const text = chatInput.value.trim(); if (!text) return; appendMsg(text, 'user'); chatInput.value = ''; setTimeout(() => appendMsg(chatbotReply(text), 'bot'), 400); }
+        const CHAT_API = "https://med-phone-backend.onrender.com/api/chatbot";
+        function chatbotReply(text) {} // kept for compatibility
+        async function handleChat() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+            appendMsg(text, 'user');
+            chatInput.value = '';
+
+            const typingId = 'typing-' + Date.now();
+            const typingDiv = document.createElement('div');
+            typingDiv.id = typingId;
+            typingDiv.style.cssText = 'padding:10px 14px;border-radius:12px;margin-bottom:4px;max-width:85%;font-size:13px;line-height:1.5;background:#1a2540;color:rgba(255,255,255,0.85);';
+            typingDiv.innerHTML = '<i class="fas fa-ellipsis-h fa-beat"></i> Thinking...';
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                const response = await fetch(CHAT_API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+
+                if (!response.ok) throw new Error('API Error');
+                const data = await response.json();
+
+                const indicator = document.getElementById(typingId);
+                if (indicator) indicator.remove();
+
+                appendMsg(data.reply || "Sorry, I couldn't understand that.", 'bot');
+            } catch (error) {
+                console.error('Chat error:', error);
+                const indicator = document.getElementById(typingId);
+                if (indicator) indicator.remove();
+                appendMsg("سمح ليا أخويا، كاين شي مشكل تقني حالياً. حاول مرة أخرى من بعد! 🙏", 'bot');
+            }
+        }
         function appendMsg(text, sender) {
             const d = document.createElement('div');
             d.style.cssText = `padding:10px 14px;border-radius:12px;margin-bottom:4px;max-width:85%;font-size:13px;line-height:1.5;`;

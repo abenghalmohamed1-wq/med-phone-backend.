@@ -9,6 +9,7 @@ router = APIRouter(prefix="/api/chatbot", tags=["Chatbot"])
 class ChatRequest(BaseModel):
     message: str
 
+@router.post("")
 @router.post("/chat")
 async def chat_with_bot(req: ChatRequest, settings=Depends(get_settings)):
     api_key = settings.gemini_api_key
