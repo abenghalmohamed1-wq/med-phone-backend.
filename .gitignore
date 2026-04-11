@@ -1,6 +1,0 @@
-.env
-*.env
-firebase-key.json
-firebase_credentials.json
-__pycache__/
-.venv/
