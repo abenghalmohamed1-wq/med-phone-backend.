@@ -57,12 +57,11 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # ── Routers ───────────────────────────────────────────────────────────────────
 
 app.include_router(auth.router)
@@ -72,8 +71,7 @@ app.include_router(cart.router)
 app.include_router(contact.router)
 app.include_router(commandes.router)   # COD — Paiement à la livraison
 app.include_router(search.router)
-app.include_router(chatbot.router)
-
+app.include_router(chatbot.router, tags=["Chatbot"])
 
 
 # ── Health check ──────────────────────────────────────────────────────────────
