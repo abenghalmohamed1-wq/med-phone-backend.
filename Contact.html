@@ -565,50 +565,77 @@
             color: rgba(255, 255, 255, 0.35);
         }
 
+        /* ===== HAMBURGER MENU ===== */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            width: 42px; height: 42px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            border: 1.5px solid rgba(255,255,255,0.2);
+            transition: background .3s; flex-shrink: 0;
+        }
+        .hamburger:hover { background: rgba(255,255,255,0.2); }
+        .hamburger span { display: block; width: 20px; height: 2px; background: #fff; border-radius: 2px; transition: all .35s cubic-bezier(.4,0,.2,1); }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-nav-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(10,26,92,0.55); z-index: 999; backdrop-filter: blur(4px);
+        }
+        .mobile-nav-overlay.open { display: block; }
+        .mobile-nav {
+            position: fixed; top: 0; right: -100%;
+            width: min(320px, 85vw); height: 100%;
+            background: linear-gradient(180deg,#0a1a5c 0%,#1a3fa8 100%);
+            z-index: 1001; display: flex; flex-direction: column;
+            padding: 28px 0 40px; transition: right .38s cubic-bezier(.4,0,.2,1);
+            box-shadow: -8px 0 40px rgba(0,0,0,0.3);
+        }
+        .mobile-nav.open { right: 0; }
+        .mobile-nav-header { display: flex; align-items: center; justify-content: space-between; padding: 0 24px 28px; border-bottom: 1px solid rgba(255,255,255,0.12); }
+        .mobile-nav-logo { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: 2px; }
+        .mobile-nav-logo span { color: var(--blue-light); }
+        .mobile-nav-close { width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 10px; border: none; color: #fff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .mobile-nav-links { flex: 1; padding: 24px 0; display: flex; flex-direction: column; }
+        .mobile-nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 17px; font-weight: 700; padding: 16px 28px; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: center; gap: 14px; transition: all .25s; }
+        .mobile-nav-links a:hover, .mobile-nav-links a.active { background: rgba(255,255,255,0.1); color: #fff; padding-left: 36px; }
+        .mobile-nav-links a i { width: 20px; text-align: center; color: var(--blue-light); }
+        .mobile-nav-cart { margin: 16px 28px 0; background: var(--blue); color: #fff; border: none; padding: 14px; border-radius: 20px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 6px 20px var(--blue-glow); transition: all .3s; }
+        .mobile-nav-cart:hover { background: var(--blue-dark); }
+        .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--border); padding: 8px 0 max(8px, env(safe-area-inset-bottom)); z-index: 998; box-shadow: 0 -4px 20px rgba(26,110,245,0.1); }
+        .bottom-nav-inner { display: flex; justify-content: space-around; align-items: center; }
+        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #8a9ac0; font-size: 10px; font-weight: 700; transition: color .25s; padding: 4px 10px; cursor: pointer; background: none; border: none; font-family: 'Inter', sans-serif; }
+        .bottom-nav-item i { font-size: 20px; }
+        .bottom-nav-item.active, .bottom-nav-item:hover { color: var(--blue); }
+
         @media(max-width:900px) {
-            header {
-                flex-direction: column;
-                gap: 15px;
-                padding: 18px 20px;
-            }
+            header { padding: 14px 20px; }
+            nav { display: none; }
+            .header-actions { display: none; }
+            .hamburger { display: flex; }
+            .contact-hero { padding: 60px 18px; }
+            .hero-title { font-size: 34px; }
+            .info-section { padding: 0 18px; margin-top: -30px; }
+            .info-grid { grid-template-columns: 1fr; }
+            main { grid-template-columns: 1fr; padding: 0 18px; }
+            .form-row { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 25px; }
+            footer { padding: 40px 18px 20px; }
+            .bottom-nav { display: block; }
+            .chat-toggle-btn { bottom: 80px; }
+            .chat-container { bottom: 150px; }
+        }
 
-            .contact-hero {
-                padding: 60px 20px;
-            }
-
-            .hero-title {
-                font-size: 34px;
-            }
-
-            .info-section {
-                padding: 0 20px;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .info-section {
-                margin-top: -30px;
-            }
-
-            main {
-                grid-template-columns: 1fr;
-                padding: 0 20px;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
-
-            footer {
-                padding: 40px 20px 20px;
-            }
+        @media(max-width:600px) {
+            .hero-title { font-size: 26px; }
+            .contact-form-card { padding: 24px 18px; }
+            .chat-container { width: calc(100vw - 24px); right: 12px; left: 12px; }
         }
 
         /* CHATBOT */
@@ -757,21 +784,49 @@
 </head>
 
 <body>
+    <div class="mobile-nav-overlay" id="mobileNavOverlay" onclick="closeMobileNav()"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <div class="mobile-nav-logo">Med <span>Phone</span></div>
+            <button class="mobile-nav-close" onclick="closeMobileNav()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="mobile-nav-links">
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="index.html#products"><i class="fas fa-shopping-bag"></i> Shop</a>
+            <a href="About.html"><i class="fas fa-info-circle"></i> About</a>
+            <a href="Contact.html" class="active"><i class="fas fa-envelope"></i> Contact</a>
+        </div>
+        <button class="mobile-nav-cart" onclick="window.location.href='Carte.html'"><i class="fas fa-shopping-cart"></i> Cart</button>
+    </div>
+
     <header>
-        <a href="Home.html" class="logo-section">
+        <a href="index.html" class="logo-section">
             <div class="logo-icon"><i class="fas fa-mobile-alt"></i></div>
             <div class="logo">Med <span>Phone</span></div>
         </a>
         <nav>
-            <a href="Home.html">Home</a>
-            <a href="Home.html#products">Shop</a>
+            <a href="index.html">Home</a>
+            <a href="index.html#products">Shop</a>
             <a href="About.html">About</a>
             <a href="Contact.html" style="color:#fff;">Contact</a>
         </nav>
         <div class="header-actions">
             <div class="cart-icon" id="cartIconBtn"><i class="fas fa-shopping-cart"></i> Cart (0)</div>
         </div>
+        <div class="hamburger" id="hamburger" onclick="openMobileNav()">
+            <span></span><span></span><span></span>
+        </div>
     </header>
+
+    <nav class="bottom-nav">
+        <div class="bottom-nav-inner">
+            <a class="bottom-nav-item" href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
+            <a class="bottom-nav-item" href="index.html#products"><i class="fas fa-shopping-bag"></i><span>Shop</span></a>
+            <a class="bottom-nav-item" href="About.html"><i class="fas fa-info-circle"></i><span>About</span></a>
+            <a class="bottom-nav-item active" href="Contact.html"><i class="fas fa-envelope"></i><span>Contact</span></a>
+            <a class="bottom-nav-item" href="Carte.html"><i class="fas fa-shopping-cart"></i><span>Cart</span></a>
+        </div>
+    </nav>
 
     <div class="contact-hero">
         <div class="hero-label">📞 Get In Touch</div>
@@ -1001,6 +1056,24 @@
         function addMsg(text, cls) { const d = document.createElement('div'); d.className = `message ${cls}`; d.innerText = text; messagesArea.appendChild(d); messagesArea.scrollTop = messagesArea.scrollHeight; }
         sendBtnChat.addEventListener('click', handleChat);
         chatInput.addEventListener('keypress', e => { if (e.key === 'Enter') handleChat(); });
+
+        // ===== MOBILE NAV =====
+        function openMobileNav() {
+            document.getElementById('mobileNav').classList.add('open');
+            document.getElementById('mobileNavOverlay').classList.add('open');
+            document.getElementById('hamburger').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeMobileNav() {
+            document.getElementById('mobileNav').classList.remove('open');
+            document.getElementById('mobileNavOverlay').classList.remove('open');
+            document.getElementById('hamburger').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        const cart = JSON.parse(localStorage.getItem('mohaCart')) || [];
+        const count = cart.reduce((a, i) => a + i.qty, 0);
+        document.getElementById('cartIconBtn').innerHTML = `<i class="fas fa-shopping-cart"></i> Cart (${count})`;
+        document.getElementById('cartIconBtn').addEventListener('click', () => window.location.href = 'Carte.html');
     </script>
 </body>
 
