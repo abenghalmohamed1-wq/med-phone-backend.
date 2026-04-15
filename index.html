@@ -2057,7 +2057,7 @@
             const p = products.find(x => x.id === id); if (!p) return;
             let cart = JSON.parse(localStorage.getItem('mohaCart')) || [];
             const ex = cart.find(i => i.id === String(id));
-            if (ex) { ex.qty++; } else { cart.push({ id: String(id), name: p.name, price: p.price, qty: 1, icon: p.category === 'phones' ? 'fa-mobile-alt' : p.category === 'airpods' ? 'fa-headphones-alt' : 'fa-clock', color: '#1a6ef5' }); }
+            if (ex) { ex.qty++; } else { cart.push({ id: String(id), name: p.name, price: p.displayPrice, qty: 1, icon: p.category === 'phones' ? 'fa-mobile-alt' : p.category === 'airpods' ? 'fa-headphones-alt' : 'fa-clock', color: '#1a6ef5' }); }
             localStorage.setItem('mohaCart', JSON.stringify(cart));
             updateCartCount(); showToast(`✓ ${p.name} added to cart!`);
         }

@@ -542,6 +542,18 @@
             align-items: center;
             justify-content: center;
         }
+
+        /* RESPONSIVE DESIGN */
+        @media(max-width:600px) {
+            .cart-modal { padding: 20px; }
+            .cart-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .item-right { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; }
+            .item-img-box { width: 48px; height: 48px; font-size: 24px; }
+            .item-name { font-size: 13px; white-space: normal; }
+            .chat-popup { width: calc(100vw - 24px); right: 12px; left: 12px; }
+            .floating-chat { right: 20px; bottom: 20px; }
+            .cart-items { max-height: 40vh; }
+        }
     </style>
 </head>
 
@@ -583,7 +595,7 @@
         <div class="cart-modal">
             <div class="modal-header">
                 <div class="modal-title">Your Cart <span id="cartCountLabel">(0 Items)</span></div>
-                <div class="close-btn" onclick="window.location.href='Home.html'"><i class="fas fa-xmark"></i></div>
+                <div class="close-btn" onclick="window.location.href='index.html'"><i class="fas fa-xmark"></i></div>
             </div>
 
             <div class="cart-items" id="cartItems"></div>
@@ -598,7 +610,7 @@
                     <span class="total-amount" id="totalVal">MAD 30.00</span>
                 </div>
                 <div class="modal-actions">
-                    <button class="btn btn-secondary" onclick="window.location.href='Home.html'"><i
+                    <button class="btn btn-secondary" onclick="window.location.href='index.html'"><i
                             class="fas fa-arrow-left"></i> Continue</button>
                     <button class="btn btn-primary" onclick="window.location.href='Payment.html'"><i
                             class="fas fa-lock"></i> Checkout</button>
