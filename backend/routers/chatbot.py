@@ -72,7 +72,7 @@ async def _handle_chat(req: ChatRequest, settings) -> dict:
 سؤال العميل: "{user_message}"
 """
 
-    # ── 5. Call Gemini (async) ─────────────────────────────────────────────────
+    # ── 5. Call Gemini 1.5 Flash (async) ───────────────────────────────────────
     try:
         response = await client.aio.models.generate_content(
             model="gemini-2.5-flash",
