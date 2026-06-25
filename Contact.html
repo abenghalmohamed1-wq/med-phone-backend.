@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar">
 
 <head>
@@ -779,6 +779,14 @@
 
         .send-btn:hover {
             background: var(--blue-dark);
+        }
+
+        @media(max-width:900px) {
+            .chat-toggle-btn { bottom: 80px; }
+            .chat-container { bottom: 150px; }
+        }
+        @media(max-width:600px) {
+            .chat-container { width: calc(100vw - 24px); right: 12px; left: 12px; }
         }
     </style>
 </head>
