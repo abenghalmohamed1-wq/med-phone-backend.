@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
-import google.generativeai as genai
+from google import genai
 import os
 import logging
 from ..config import get_settings
@@ -17,7 +17,6 @@ class ChatRequest(BaseModel):
 
 async def _handle_chat(req: ChatRequest, settings) -> dict:
     # ── 1. Read API key ────────────────────────────────────────────────────────
-    # Try settings first, then fall back to direct OS env var
     api_key = settings.gemini_api_key or os.environ.get("GEMINI_API_KEY", "")
     logger.info(f"[Chatbot] Gemini key present: {bool(api_key)} | length: {len(api_key)}")
 
@@ -26,9 +25,8 @@ async def _handle_chat(req: ChatRequest, settings) -> dict:
         logger.error(f"[Chatbot] {msg}")
         return {"reply": msg}
 
-    # ── 2. Configure Gemini ────────────────────────────────────────────────────
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-2.5-flash")
+    # ── 2. Create Gemini client (new google-genai SDK) ─────────────────────────
+    client = genai.Client(api_key=api_key)
 
     # ── 3. Fetch products from Firebase ───────────────────────────────────────
     product_context = "لا تتوفر معلومات عن المنتجات حاليا."
@@ -74,9 +72,12 @@ async def _handle_chat(req: ChatRequest, settings) -> dict:
 سؤال العميل: "{user_message}"
 """
 
-    # ── 5. Call Gemini ─────────────────────────────────────────────────────────
+    # ── 5. Call Gemini (async) ─────────────────────────────────────────────────
     try:
-        response = await model.generate_content_async(prompt)
+        response = await client.aio.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt,
+        )
         reply = response.text
         logger.info(f"[Chatbot] Gemini replied successfully ({len(reply)} chars).")
         return {"reply": reply}
