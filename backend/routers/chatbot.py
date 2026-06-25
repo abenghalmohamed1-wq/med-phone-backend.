@@ -19,7 +19,6 @@ async def _handle_chat(req: ChatRequest, settings) -> dict:
     # ── 1. Read API key ────────────────────────────────────────────────────────
     # Try settings first, then fall back to direct OS env var
     api_key = settings.gemini_api_key or os.environ.get("GEMINI_API_KEY", "")
-
     logger.info(f"[Chatbot] Gemini key present: {bool(api_key)} | length: {len(api_key)}")
 
     if not api_key:
@@ -29,7 +28,7 @@ async def _handle_chat(req: ChatRequest, settings) -> dict:
 
     # ── 2. Configure Gemini ────────────────────────────────────────────────────
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-2.5-flash")
 
     # ── 3. Fetch products from Firebase ───────────────────────────────────────
     product_context = "لا تتوفر معلومات عن المنتجات حاليا."
