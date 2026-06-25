@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar">
 
 <head>
@@ -2066,7 +2066,7 @@
         document.getElementById('cartIconBtn').addEventListener('click', () => window.location.href = 'Carte.html');
         updateCartCount(); loadProducts();
         // الرابط الكامل ديال الـ chatbot endpoint — Backend Web Service على Render
-        const CHAT_API = "https://med-phone-backend.onrender.com/api/chatbot";
+        const CHAT_API = (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") ? "http://localhost:8000/api/chatbot" : "https://med-phone-backend.onrender.com/api/chatbot";
         const chatToggle = document.getElementById('chatToggle'), chatContainer = document.getElementById('chatContainer'), closeChat = document.getElementById('closeChat'), chatInput = document.getElementById('chatInput'), sendBtn = document.getElementById('sendMessage'), messagesArea = document.getElementById('chatMessages');
         chatToggle.addEventListener('click', () => chatContainer.style.display = 'flex');
         closeChat.addEventListener('click', () => chatContainer.style.display = 'none');

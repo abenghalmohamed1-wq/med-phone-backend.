@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar">
 
 <head>
@@ -697,7 +697,7 @@
         const chatMessages = document.getElementById('chatMessages');
         chatToggle.addEventListener('click', () => chatContainer.style.display = 'flex');
         closeChat.addEventListener('click', () => chatContainer.style.display = 'none');
-        const CHAT_API = "https://med-phone-backend.onrender.com/api/chatbot";
+        const CHAT_API = (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") ? "http://localhost:8000/api/chatbot" : "https://med-phone-backend.onrender.com/api/chatbot";
         function chatbotReply(text) {} // kept for compatibility
         async function handleChat() {
             const text = chatInput.value.trim();
