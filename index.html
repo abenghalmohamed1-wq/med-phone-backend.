@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar">
 
 <head>
@@ -2035,7 +2035,7 @@
                             ${p.displayOrigPrice && p.displayOrigPrice > p.displayPrice ? `<span style="font-size:11px;color:var(--text-light);text-decoration:line-through;line-height:1;">MAD ${p.displayOrigPrice.toLocaleString()}</span>` : ''}
                             <span>MAD ${p.displayPrice.toLocaleString()}</span>
                         </div>
-                        <button class="add-btn" onclick="event.stopPropagation();addToCart(${p.id})"><i class="fas fa-cart-plus"></i> Add</button>
+                        <button class="add-btn" onclick="event.stopPropagation();addToCart('${p.id}')"><i class="fas fa-cart-plus"></i> Add</button>
                     </div>
                 </div>
             </div>`).join('');
@@ -2054,10 +2054,11 @@
             renderProducts();
         }
         function addToCart(id) {
-            const p = products.find(x => x.id === id); if (!p) return;
+            const sid = String(id);
+            const p = products.find(x => String(x.id) === sid); if (!p) return;
             let cart = JSON.parse(localStorage.getItem('mohaCart')) || [];
-            const ex = cart.find(i => i.id === String(id));
-            if (ex) { ex.qty++; } else { cart.push({ id: String(id), name: p.name, price: p.displayPrice, qty: 1, icon: p.category === 'phones' ? 'fa-mobile-alt' : p.category === 'airpods' ? 'fa-headphones-alt' : 'fa-clock', color: '#1a6ef5' }); }
+            const ex = cart.find(i => i.id === sid);
+            if (ex) { ex.qty++; } else { cart.push({ id: sid, name: p.name, price: p.displayPrice, qty: 1, icon: p.category === 'phones' ? 'fa-mobile-alt' : p.category === 'airpods' ? 'fa-headphones-alt' : 'fa-clock', color: '#1a6ef5' }); }
             localStorage.setItem('mohaCart', JSON.stringify(cart));
             updateCartCount(); showToast(`✓ ${p.name} added to cart!`);
         }
